@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator</title>
+    <style>
+      .heading {
+        text-align: center;
+      }
+      table {
+        border: 1px solid black;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      input[type="button"] {
+        width: 100%;
+        padding: 20px 40px;
+        background-color: rgba(128, 79, 0, 0.578);
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+      }
+
+      input[type="text"] {
+        padding: 20px 30px;
+        font-size: 24px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1 class="heading">HTML Calculator</h1>
+    <table id="calcu">
+      <tr>
+        <td colspan="3">
+          <input type="text" id="result" disabled />
+        </td>
+        <td><input type="button" value="c" onclick="clearResult()" /></td>
+      </tr>
+
+      <tr>
+        <td><input type="button" value="1" onclick="addToResult('1')" /></td>
+        <td><input type="button" value="2" onclick="addToResult('2')" /></td>
+        <td><input type="button" value="3" onclick="addToResult('3')" /></td>
+        <td><input type="button" value="/" onclick="addToResult('/')" /></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="4" onclick="addToResult('4')" /></td>
+        <td><input type="button" value="5" onclick="addToResult('5')" /></td>
+        <td><input type="button" value="6" onclick="addToResult('6')" /></td>
+        <td><input type="button" value="*" onclick="addToResult('*')" /></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="7" onclick="addToResult('7')" /></td>
+        <td><input type="button" value="8" onclick="addToResult('8')" /></td>
+        <td><input type="button" value="9" onclick="addToResult('9')" /></td>
+        <td><input type="button" value="-" onclick="addToResult('-')" /></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="0" onclick="addToResult('0')" /></td>
+        <td><input type="button" value="." onclick="addToResult('.')" /></td>
+        <td><input type="button" value="=" onclick="calculateResult()" /></td>
+        <td><input type="button" value="+" onclick="addToResult('+')" /></td>
+      </tr>
+    </table>
+
+    <script>
+      let result = document.getElementById("result");
+
+      function addToResult(value) {
+        result.value += value;
+      }
+
+      function clearResult() {
+        result.value = "";
+      }
+
+      function calculateResult() {
+        try {
+          let expression = result.value;
+          let operators = expression.match(/[+\-*/]/g);
+          let numbers = expression.split(/[+\-*/]/).map(Number);
+
+          if (operators && numbers.length >= 2) {
+            let total = numbers[0];
+            for (let i = 0; i < operators.length; i++) {
+              if (operators[i] === "+") {
+                total += numbers[i + 1];
+              } else if (operators[i] === "-") {
+                total -= numbers[i + 1];
+              } else if (operators[i] === "*") {
+                total *= numbers[i + 1];
+              } else if (operators[i] === "/") {
+                total /= numbers[i + 1];
+              }
+            }
+            result.value = total;
+          }
+        } catch (error) {
+          result.value = "Error";
+        }
+      }
+    </script>
+  </body>
+</html>

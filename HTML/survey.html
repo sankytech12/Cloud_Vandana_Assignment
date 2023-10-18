@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Survey Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: 10px auto;
+        padding: 20px;
+        background-color: #f4f4f4;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="email"],
+      input[type="tel"],
+      select {
+        width: 90%;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      input[type="checkbox"] {
+        margin-top: 10px;
+        margin-right: 5px;
+      }
+
+      button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1;
+        overflow: auto;
+      }
+
+      .popup-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        width: 70%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .close {
+        color: #555;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Survey Form</h1>
+      <form id="surveyForm">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required />
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required />
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required />
+
+        <label for="country">Country:</label>
+        <select id="country" name="country" required>
+          <option value="">Select Country</option>
+          <option value="india">India</option>
+          <option value="usa">USA</option>
+          <option value="canada">Canada</option>
+        </select>
+
+        <label>Gender:</label>
+        <input type="checkbox" id="male" name="gender" value="Male" /> Male
+        <input type="checkbox" id="female" name="gender" value="Female" />Female
+        
+        <label for="profession">Profession:</label>
+        <input type="text" id="profession" name="profession" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="mobileNumber">Mobile Number:</label>
+        <input type="tel" id="mobileNumber" name="mobileNumber" required />
+
+        <button type="submit">Submit</button>
+        <button type="button" id="resetButton">Reset</button>
+      </form>
+    </div>
+
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <span class="close" id="closePopup">&times;</span>
+        <h2>Survey Form Data</h2>
+        <p id="popupData"></p>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("surveyForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (validateForm()) {
+            displayPopup();
+            this.reset();
+          }
+        });
+
+      document
+        .getElementById("resetButton")
+        .addEventListener("click", function () {
+          document.getElementById("surveyForm").reset();
+        });
+
+      function validateForm() {
+        return true;
+      }
+
+      function displayPopup() {
+        const formData = new FormData(document.getElementById("surveyForm"));
+        let popupContent = "";
+
+        for (const [key, value] of formData.entries()) {
+          popupContent += `${key}: ${value}`;
+          popupContent += "<br>";
+        }
+
+        document.getElementById("popupData").innerHTML = popupContent;
+        document.getElementById("popup").style.display = "block";
+      }
+
+      document
+        .getElementById("closePopup")
+        .addEventListener("click", function () {
+          document.getElementById("popup").style.display = "none";
+        });
+    </script>
+  </body>
+</html>
